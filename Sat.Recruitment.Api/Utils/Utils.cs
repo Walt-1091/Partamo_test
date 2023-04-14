@@ -28,9 +28,7 @@ namespace Sat.Recruitment.Api.Utils
         private static StreamReader ReadUsersFromFile()
         {
             var path = Directory.GetCurrentDirectory() + "/Files/Users.txt";
-
             FileStream fileStream = new FileStream(path, FileMode.Open);
-
             StreamReader reader = new StreamReader(fileStream);
             return reader;
         }
@@ -55,30 +53,16 @@ namespace Sat.Recruitment.Api.Utils
                     var percentage = Convert.ToDecimal(0.8);
                     return ReturnNewValueMoney(percentage, money);
                 }
-                else
-                    return money;
             }
-            else if (userType == "SuperUser")
+            else if (userType == "SuperUser" && money > 100)
             {
-                if (money > 100)
-                {
-                    var percentage = Convert.ToDecimal(0.20);
-                    return ReturnNewValueMoney(percentage, money);
-                }
-                else
-                    return money;
+                var percentage = Convert.ToDecimal(0.20);
+                return ReturnNewValueMoney(percentage, money);
             }
-            else if (userType == "Premium")
-            {
-                if (money > 100)
-                {
-                    return ReturnNewValueMoney(Convert.ToDecimal(2), money);
-                }
-                else
-                    return money;
-            }
-            else 
-                return money;
+            else if (userType == "Premium" && money > 100)
+                return ReturnNewValueMoney(Convert.ToDecimal(2), money);
+             
+            return money;
         }
 
         private static decimal ReturnNewValueMoney(decimal percentage, decimal money)
